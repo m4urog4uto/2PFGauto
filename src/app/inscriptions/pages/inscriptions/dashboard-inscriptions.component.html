@@ -1,0 +1,30 @@
+<div class="app-layout-container">
+    <button class="btn-add" color="primary" mat-raised-button (click)="addClassForm()">
+      <mat-icon>add</mat-icon>
+      Añadir Inscripcion
+    </button>
+  
+    <div class="message-empty-cards" *ngIf="classes.length === 0; else cards">
+      No tiene inscripciones cargadas en el sistema, para agregar utilice el boton "Añadir Inscripción"
+    </div>
+    <ng-template #cards>
+        <div class="container-cards">
+            <mat-card *ngFor="let class of classes" class="card">
+                <mat-card-header>
+                    <mat-card-title>{{ class.courseName }}</mat-card-title>
+                    <mat-card-subtitle>Comisión: #{{ class.commission }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <div *ngFor="let mentor of class.mentors">
+                        <span>{{ mentor.fullName }}</span>
+                    </div>
+                    <span>Cantidad de Alumnos: {{ class.students.length }}</span>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button (click)="detailClass(class.commission)">Ver</button>
+                    <button mat-button>Editar</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </ng-template>
+</div>
