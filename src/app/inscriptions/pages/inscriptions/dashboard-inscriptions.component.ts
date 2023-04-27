@@ -68,6 +68,7 @@ export class DashboardInscriptionsComponent {
           return obj;
         })
         this.inscriptions = [ ...newAlumnosList ];
+        this.inscriptionsService.updateInscriptionsList(this.inscriptions);
       });
     }
   }
@@ -79,6 +80,7 @@ export class DashboardInscriptionsComponent {
     };
 
     this.inscriptions = [ ...this.inscriptions ];
+    this.inscriptionsService.updateInscriptionsList(this.inscriptions);
   }
 
   detailInscription(comnission: number): void {

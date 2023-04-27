@@ -50,6 +50,7 @@ export class DashboardStudentsComponent {
     };
 
     this.students = [ ...this.students ];
+    this.studentService.updateStudentList(this.students);
   }
 
   editStudent(ev: number): void {
@@ -78,6 +79,7 @@ export class DashboardStudentsComponent {
           return obj;
         })
         this.students = [ ...newAlumnosList ];
+        this.studentService.updateStudentList(this.students);
       });
 
     }

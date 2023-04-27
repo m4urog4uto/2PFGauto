@@ -34,6 +34,7 @@ export class DashboardCoursesComponent {
       if (result.courseName) {
         const newStudent = { ...result, id: this.courses.length + 1 }
         this.courses = [ ...this.courses, newStudent ];
+        this.coursesService.updateCourseList(this.courses);
       }
     });
   }
@@ -45,6 +46,7 @@ export class DashboardCoursesComponent {
     };
 
     this.courses = [ ...this.courses ];
+    this.coursesService.updateCourseList(this.courses);
   }
 
   editCourse(ev: number): void {
@@ -70,6 +72,7 @@ export class DashboardCoursesComponent {
           return obj;
         })
         this.courses = [ ...newAlumnosList ];
+        this.coursesService.updateCourseList(this.courses);
       });
 
     }

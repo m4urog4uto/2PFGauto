@@ -7,7 +7,7 @@ import { Course } from '../models';
 })
 export class CoursesService {
 
-  private students$ = new BehaviorSubject<Course[]>([
+  private courses$ = new BehaviorSubject<Course[]>([
     {
       id: 1,
       courseName: 'Angular',
@@ -30,7 +30,11 @@ export class CoursesService {
 
   constructor() {}
 
+  updateCourseList(courses: Course[]): void {
+    this.courses$.next(courses);
+  }
+
   getCoursesList(): Observable<Course[]> {
-    return this.students$.asObservable();
+    return this.courses$.asObservable();
   }
 }
