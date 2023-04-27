@@ -40,7 +40,7 @@ export class ModalFormInscriptionComponent {
     private inscriptionsService: InscriptionsService
   ) {
     const { id, commission, courseName, mentors, students } = data.inscription;
-    
+
     this.commissionCtrl = new FormControl(commission, [ Validators.required ]);
     this.courseNameCtrl = new FormControl(courseName, [ Validators.required ]);
     this.mentorsCtrl = new FormControl(mentors, [ Validators.required ]);

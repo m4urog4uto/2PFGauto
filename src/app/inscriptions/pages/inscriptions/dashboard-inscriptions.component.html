@@ -18,7 +18,12 @@
                     <div *ngFor="let mentor of inscription.mentors">
                         <span>{{ mentor.fullName }}</span>
                     </div>
-                    <span>Cantidad de Alumnos: {{ inscription.students.length }}</span>
+                    <span *ngIf="inscription.students.length === 0; else studentsQuantity">
+                        <strong>No tiene Alumnos Cargados</strong>
+                    </span>
+                    <ng-template #studentsQuantity>
+                        <span>Cantidad de Alumnos: {{ inscription.students.length }}</span>
+                    </ng-template>
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-icon-button (click)="detailInscription(inscription.commission)">

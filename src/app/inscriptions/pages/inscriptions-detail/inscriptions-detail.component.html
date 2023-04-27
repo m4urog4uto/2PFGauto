@@ -12,9 +12,14 @@
     </div>
     <div>
         <h6>Estudiantes Asignados</h6>
-        <app-table-inscriptions
-            [items]="inscriptionsDetail.students"
-            (removeStudent)="removeInscriptionStudent($event)"
-      ></app-table-inscriptions>
+        <div class="message-empty-table" *ngIf="inscriptionsDetail.students.length === 0; else studentsAssigned">
+            No tiene alumnos cargados en al curso
+          </div>
+        <ng-template #studentsAssigned>
+            <app-table-inscriptions
+                [items]="inscriptionsDetail.students"
+                (removeStudent)="removeInscriptionStudent($event)"
+          ></app-table-inscriptions>
+        </ng-template>
     </div>
 </div>
