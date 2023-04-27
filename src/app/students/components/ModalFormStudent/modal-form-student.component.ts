@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Student } from 'src/app/core/models';
+import { StudentService } from '../../../core/services/student.service';
+import { Observable } from 'rxjs';
 
 
 interface DialogData {
@@ -29,22 +31,16 @@ export class ModalFormStudentComponent {
   phoneCtrl: FormControl<string | null>;
   courseSelectedCtrl: FormControl<string | null>;
 
-  courses: Courses[] = [
-    {value: 'Angular', viewValue: 'Angular'},
-    {value: 'Fullstack MERN', viewValue: 'Fullstack MERN'},
-    {value: 'Fullstack MEAN', viewValue: 'Fullstack MEAN'},
-    {value: 'JavaScript', viewValue: 'JavaScript'},
-    {value: 'Java', viewValue: 'Java'},
-    {value: 'My SQL', viewValue: 'My SQL'},
-    {value: 'Node JS', viewValue: 'Node JS'},
-    {value: 'React JS', viewValue: 'React JS'},
-  ];
+  coursesList$: Observable<string[]>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dialogRef: MatDialogRef<ModalFormStudentComponent>,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    private studentService: StudentService
   ) {
+    this.coursesList$ = this.studentService.getListOfCourses(); 
+
     const { id, dni, name, surname, email, phone, courseSelected } = data.alumno;
     
     this.nameCtrl = new FormControl(name, [ Validators.required ]);
