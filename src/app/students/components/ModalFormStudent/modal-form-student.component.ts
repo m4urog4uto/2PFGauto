@@ -29,7 +29,7 @@ export class ModalFormStudentComponent {
   dniCtrl: FormControl<string | null>;
   emailCtrl: FormControl<string | null>;
   phoneCtrl: FormControl<string | null>;
-  courseSelectedCtrl: FormControl<string | null>;
+  courseSelectedCtrl: FormControl<string[] | null>;
 
   coursesList$: Observable<string[]>;
 

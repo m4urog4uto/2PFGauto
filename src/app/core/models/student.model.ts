@@ -5,5 +5,5 @@ export interface Student {
     dni: string;
     email: string;
     phone: string;
-    courseSelected: string;
+    courseSelected: string[];
 }
