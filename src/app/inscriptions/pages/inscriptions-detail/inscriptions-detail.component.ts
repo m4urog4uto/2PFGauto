@@ -18,7 +18,7 @@ export class InscriptionsDetailComponent implements OnDestroy {
     private inscriptionsService: InscriptionsService,
     private activatedRoute: ActivatedRoute
   ) {
-    // TODO: cuando quiero visualizar una comision que cree mediante formulario, no lo encuentra
+
     this.inscriptionsService.getInscriptionDetail(parseInt(this.activatedRoute.snapshot.params['commission']))
       .pipe(takeUntil(this.destroyed$))
       .subscribe((inscriptionDetail) => this.inscriptionsDetail = inscriptionDetail);
