@@ -1,1 +1,23 @@
-<pre>{{ studentDetail$ | async | json }}</pre>
+<div class="app-details-students" *ngIf="studentDetail$ | async; let studentDetail">
+    <section>
+        <div class="Profile">
+            <h1>
+                {{studentDetail.name + ' ' + studentDetail.surname}}
+            </h1>
+        </div>
+    </section>
+    <section>
+        <div>
+            <span>DNI: {{ studentDetail.dni }}</span>
+        </div>
+        <div>
+            <span>Email: {{ studentDetail.email }}</span>
+        </div>
+        <div>
+            <span>Teléfono: {{ studentDetail.phone }}</span>
+        </div>
+        <div>
+            <span>Curso Seleccionado: {{ studentDetail.courseSelected }}</span>
+        </div>
+    </section>
+</div>

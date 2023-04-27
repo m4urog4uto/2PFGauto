@@ -1,10 +1,16 @@
 .container-cards {
     display: flex;
-    justify-content: space-between;
+    max-width: 1200px;
+    flex-wrap: wrap;
 }
 
 .card {
-    width: 332px;
+    width: 312px;
+    margin-right: 20px;
+    margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .btn-add {

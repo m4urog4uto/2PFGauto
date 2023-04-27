@@ -11,13 +11,26 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class InscriptionsDetailComponent {
 
-  inscriptionsDetail$: Observable<Inscription | undefined>;
+  inscriptionsDetail: Inscription | undefined;
 
   constructor(
     private inscriptionsService: InscriptionsService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.inscriptionsDetail$ = this.inscriptionsService.getInscriptionDetail(parseInt(this.activatedRoute.snapshot.params['commission']));
+    // TODO: cuando quiero visualizar una comision que cree mediante formulario, no lo encuentra
+    this.inscriptionsService.getInscriptionDetail(parseInt(this.activatedRoute.snapshot.params['commission']))
+      .subscribe((inscriptionDetail) => this.inscriptionsDetail = inscriptionDetail);
+  }
+
+  removeInscriptionStudent(ev: number): void {
+    if (ev && this.inscriptionsDetail) {
+      const studentId = this.inscriptionsDetail.students.findIndex((obj) => obj.id === ev);
+      if (studentId > -1) {
+        this.inscriptionsDetail?.students.splice(studentId, 1);
+      };
+  
+      this.inscriptionsDetail.students = [ ...this.inscriptionsDetail?.students ];
+    }
   }
 
 }

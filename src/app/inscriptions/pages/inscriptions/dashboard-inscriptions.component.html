@@ -1,28 +1,35 @@
 <div class="app-layout-container">
-    <button class="btn-add" color="primary" mat-raised-button (click)="addClassForm()">
+    <button class="btn-add" color="primary" mat-raised-button (click)="addInscriptionForm()">
       <mat-icon>add</mat-icon>
       Añadir Inscripcion
     </button>
   
-    <div class="message-empty-cards" *ngIf="classes.length === 0; else cards">
+    <div class="message-empty-cards" *ngIf="inscriptions.length === 0; else cards">
       No tiene inscripciones cargadas en el sistema, para agregar utilice el boton "Añadir Inscripción"
     </div>
     <ng-template #cards>
         <div class="container-cards">
-            <mat-card *ngFor="let class of classes" class="card">
+            <mat-card *ngFor="let inscription of inscriptions" class="card">
                 <mat-card-header>
-                    <mat-card-title>{{ class.courseName }}</mat-card-title>
-                    <mat-card-subtitle>Comisión: #{{ class.commission }}</mat-card-subtitle>
+                    <mat-card-title>{{ inscription.courseName }}</mat-card-title>
+                    <mat-card-subtitle>Comisión: #{{ inscription.commission }}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-                    <div *ngFor="let mentor of class.mentors">
+                    <div *ngFor="let mentor of inscription.mentors">
                         <span>{{ mentor.fullName }}</span>
                     </div>
-                    <span>Cantidad de Alumnos: {{ class.students.length }}</span>
+                    <span>Cantidad de Alumnos: {{ inscription.students.length }}</span>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-button (click)="detailClass(class.commission)">Ver</button>
-                    <button mat-button>Editar</button>
+                    <button mat-icon-button (click)="detailInscription(inscription.commission)">
+                        <mat-icon>remove_red_eye</mat-icon>
+                      </button>
+                    <button mat-icon-button (click)="editInscription(inscription.id)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                    <button mat-icon-button (click)="removeInscription(inscription.id)">
+                        <mat-icon>close</mat-icon>
+                    </button>
                 </mat-card-actions>
             </mat-card>
         </div>

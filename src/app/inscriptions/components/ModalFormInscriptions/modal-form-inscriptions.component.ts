@@ -2,15 +2,17 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Inscription, InscriptionsStudents, Mentor } from '../../../core/models/inscriptions.model';
+import { InscriptionsService } from '../../../core/services/inscriptions.service';
+import { Observable, take, takeUntil } from 'rxjs';
 
 
 interface DialogData {
   inscription: Inscription;
 }
 
-interface MentorOptions {
-  value: string;
-  viewValue: string;
+interface SelectOptions {
+  id: number;
+  fullName: string;
 }
 
 @Component({
@@ -27,34 +29,35 @@ export class ModalFormInscriptionComponent {
   mentorsCtrl: FormControl<Mentor[] | null>;
   studentsCtrl: FormControl<InscriptionsStudents[] | null>;
 
-  mentorsList: MentorOptions[] = [
-    {value: 'Carlos Garcia', viewValue: 'Carlos Garcia'},
-    {value: 'Yamila Gimenez', viewValue: 'Yamila Gimenez'},
-    {value: 'Juan Lopez', viewValue: 'Juan Lopez'},
-    {value: 'Ricardo Moreno', viewValue: 'Ricardo Moreno'},
-    {value: 'Nicolas Patrizi', viewValue: 'Nicolas Patrizi'},
-    {value: 'Sonia Gonzales', viewValue: 'Sonia Gonzales'}
-  ];
+  mentorsList$: Observable<SelectOptions[]>;
+
+  studentsList$: Observable<SelectOptions[]>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dialogRef: MatDialogRef<ModalFormInscriptionComponent>,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    private inscriptionsService: InscriptionsService
   ) {
     const { id, commission, courseName, mentors, students } = data.inscription;
     
     this.commissionCtrl = new FormControl(commission, [ Validators.required ]);
     this.courseNameCtrl = new FormControl(courseName, [ Validators.required ]);
-    this.mentorsCtrl = new FormControl(mentors, [ Validators.required, Validators.email ]);
+
+    // TODO: Error, no me carga los valores del array de objetos como de forma inicial.
+    this.mentorsCtrl = new FormControl(mentors, [ Validators.required ]);
     this.studentsCtrl = new FormControl(students, [ Validators.required ]);
 
     this.inscriptionForm = this.formBuilder.group({
       id: new FormControl(id, []),
       commission: this.commissionCtrl,
       courseName: this.courseNameCtrl,
-      mentorsCtrl: this.mentorsCtrl,
+      mentors: this.mentorsCtrl,
       students: this.studentsCtrl
     });
+
+    this.studentsList$ = this.inscriptionsService.getInscriptionsStudents().pipe(take(1));
+    this.mentorsList$ = this.inscriptionsService.getInscriptionsMentors().pipe(take(1));
   }
 
   onSubmit(): void {

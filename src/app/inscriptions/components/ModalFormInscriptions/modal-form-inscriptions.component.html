@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 [appFontSize]="20" mat-dialog-title>Añadir Alumno</h1>
+  <h1 [appFontSize]="20" mat-dialog-title>Añadir Inscripción</h1>
   <form
     (ngSubmit)="onSubmit()"
     [formGroup]="inscriptionForm"
@@ -13,7 +13,7 @@
           <input
             [formControl]="commissionCtrl"
             matInput
-            placeholder="Nombre"
+            placeholder="Comisión"
             [tabIndex]="1"
           >
 
@@ -27,7 +27,7 @@
           <input
             [formControl]="courseNameCtrl"
             matInput
-            placeholder="Email"
+            placeholder="Nombre del Curso"
             [tabIndex]="3"
           >
       
@@ -38,10 +38,23 @@
       </div>
       <div class="col">
         <mat-form-field appearance="fill">
-          <mat-label>Mentoria</mat-label>
+          <mat-label>Añadir Mentoria</mat-label>
           <mat-select [formControl]="mentorsCtrl" multiple>
-            <mat-option *ngFor="let mentor of mentorsList" [value]="mentor">{{mentor}}</mat-option>
+            <mat-option *ngFor="let mentor of mentorsList$ | async" [value]="mentor">{{mentor.fullName}}</mat-option>
           </mat-select>
+          <mat-error *ngFor="let error of mentorsCtrl.errors | keyvalue">
+            {{ error | controlErrorMessages }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Añadir Alumnos</mat-label>
+          <mat-select [formControl]="studentsCtrl" multiple>
+            <mat-option *ngFor="let student of studentsList$ | async" [value]="student">{{student.fullName}}</mat-option>
+          </mat-select>
+          <mat-error *ngFor="let error of studentsCtrl.errors | keyvalue">
+            {{ error | controlErrorMessages }}
+          </mat-error>
         </mat-form-field>
       </div>
     </section>

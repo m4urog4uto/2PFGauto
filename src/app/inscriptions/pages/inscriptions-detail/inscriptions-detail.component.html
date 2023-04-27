@@ -1,1 +1,17 @@
-<pre>{{ inscriptionsDetail$ | async | json }}</pre>
+<div *ngIf="inscriptionsDetail">
+    <h1>{{ inscriptionsDetail.courseName }}</h1>
+    <h2>Comisión: #{{ inscriptionsDetail.commission }}</h2>
+
+    <div>
+        <h4>Mentores Asignados</h4>
+        <ul>
+            <li *ngFor="let mentors of inscriptionsDetail.mentors">{{ mentors.fullName }}</li>
+        </ul>
+    </div>
+    <div>
+        <app-table-inscriptions
+            [items]="inscriptionsDetail.students"
+            (removeStudent)="removeInscriptionStudent($event)"
+      ></app-table-inscriptions>
+    </div>
+</div>
