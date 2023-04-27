@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
-import { Course, Inscription, InscriptionsStudents, Mentor } from '../models';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Inscription, InscriptionsStudents, Mentor } from '../models';
 import { CoursesService } from './courses.service';
+import { StudentService } from './student.service';
 
 @Injectable({
   providedIn: 'root'
@@ -55,17 +56,7 @@ export class InscriptionsService {
     }
   ])
 
-  private inscriptionsStudents$ = new BehaviorSubject<InscriptionsStudents[]>([
-    { id: 1, fullName: 'Carlos Calvo', dni: '41332232'},
-    { id: 2, fullName: 'Manuel Perez', dni: '42334622'},
-    { id: 3, fullName: 'Lucia Llanos', dni: '43432536'},
-    { id: 4, fullName: 'Maria Flores', dni: '42142532'},
-    { id: 5, fullName: 'José Hernández', dni: '40454232'},
-    { id: 6, fullName: 'Antonio Torres', dni: '39412576'},
-    { id: 7, fullName: 'Daniel Díaz', dni: '43355892'},
-    { id: 8, fullName: 'Miguel Rodríguez', dni: '37344522'},
-    { id: 9, fullName: 'Francisco Ortiz', dni: '44532146'}
-  ]);
+  inscriptionsStudentsList$: Observable<InscriptionsStudents[]>;
 
   private inscriptionsMentors$ = new BehaviorSubject<Mentor[]>([
     { id: 1, fullName: 'Carlos Garcia' },
@@ -77,11 +68,23 @@ export class InscriptionsService {
   ]);
 
   constructor(
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private studentService: StudentService
   ) {
     this.courses$ = this.coursesService.getCoursesList().pipe(
       map((courses) => courses.map((course) => course.courseName))
     );
+
+    this.inscriptionsStudentsList$ = this.studentService.getStudentList()
+      .pipe(
+        map((students) => students.map((student) => {
+          return { 
+            id: student.id,
+            fullName: `${student.name} ${student.surname}`,
+            dni: student.dni
+          }
+        }))
+      )
   }
 
   updateInscriptionsList(inscriptions: Inscription[]): void {
@@ -100,7 +103,7 @@ export class InscriptionsService {
   }
 
   getInscriptionsStudents(): Observable<InscriptionsStudents[]> {
-    return this.inscriptionsStudents$.asObservable();
+    return this.inscriptionsStudentsList$;
   }
 
   getInscriptionsMentors(): Observable<Mentor[]> {
