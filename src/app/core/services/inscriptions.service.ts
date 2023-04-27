@@ -84,6 +84,10 @@ export class InscriptionsService {
     );
   }
 
+  updateInscriptionsList(inscriptions: Inscription[]): void {
+    this.inscriptions$.next(inscriptions);
+  }
+
   getInscriptionsList(): Observable<Inscription[]> {
     return this.inscriptions$.asObservable();
   }

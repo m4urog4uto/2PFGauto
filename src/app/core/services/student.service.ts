@@ -17,7 +17,6 @@ export class StudentService {
 
   updateStudentList(students: Student[]): void {
     this.students$.next(students);
-    this.students$.subscribe(console.log)
   }
 
   getStudentList(): Observable<Student[]> {

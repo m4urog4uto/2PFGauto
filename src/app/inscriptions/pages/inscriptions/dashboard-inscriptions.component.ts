@@ -39,6 +39,7 @@ export class DashboardInscriptionsComponent {
       if (result.courseName) {
         const newStudent = { ...result, id: this.inscriptions.length + 1 }
         this.inscriptions = [ ...this.inscriptions, newStudent ];
+        this.inscriptionsService.updateInscriptionsList(this.inscriptions);
       }
     });
   }
