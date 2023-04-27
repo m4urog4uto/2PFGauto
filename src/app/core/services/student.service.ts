@@ -15,6 +15,11 @@ export class StudentService {
 
   constructor() {}
 
+  updateStudentList(students: Student[]): void {
+    this.students$.next(students);
+    this.students$.subscribe(console.log)
+  }
+
   getStudentList(): Observable<Student[]> {
     return this.students$.asObservable();
   }

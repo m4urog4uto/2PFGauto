@@ -38,6 +38,7 @@ export class DashboardStudentsComponent {
       if (result.dni) {
         const newStudent = { ...result, id: this.students.length + 1 }
         this.students = [ ...this.students, newStudent ];
+        this.studentService.updateStudentList(this.students);
       }
     });
   }
