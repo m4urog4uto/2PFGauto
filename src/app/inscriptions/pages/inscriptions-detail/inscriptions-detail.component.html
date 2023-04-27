@@ -1,14 +1,17 @@
-<div *ngIf="inscriptionsDetail">
-    <h1>{{ inscriptionsDetail.courseName }}</h1>
-    <h2>Comisión: #{{ inscriptionsDetail.commission }}</h2>
+<div *ngIf="inscriptionsDetail" class="app-inscriptions-detail">
+    <h1>Detalle Curso Inscripto</h1>
+    <hr>
+    <h2>{{ inscriptionsDetail.courseName }}</h2>
+    <h3>Comisión: #{{ inscriptionsDetail.commission }}</h3>
 
     <div>
-        <h4>Mentores Asignados</h4>
+        <h6>Mentores Asignados</h6>
         <ul>
             <li *ngFor="let mentors of inscriptionsDetail.mentors">{{ mentors.fullName }}</li>
         </ul>
     </div>
     <div>
+        <h6>Estudiantes Asignados</h6>
         <app-table-inscriptions
             [items]="inscriptionsDetail.students"
             (removeStudent)="removeInscriptionStudent($event)"
