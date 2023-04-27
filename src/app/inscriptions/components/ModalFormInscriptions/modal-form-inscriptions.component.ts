@@ -56,8 +56,8 @@ export class ModalFormInscriptionComponent {
       students: this.studentsCtrl
     });
 
-    this.studentsList$ = this.inscriptionsService.getInscriptionsStudents().pipe(take(1));
-    this.mentorsList$ = this.inscriptionsService.getInscriptionsMentors().pipe(take(1));
+    this.studentsList$ = this.inscriptionsService.getInscriptionsStudents();
+    this.mentorsList$ = this.inscriptionsService.getInscriptionsMentors();
   }
 
   onSubmit(): void {

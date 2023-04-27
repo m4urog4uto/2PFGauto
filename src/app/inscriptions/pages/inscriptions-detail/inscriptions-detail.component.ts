@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Inscription } from 'src/app/core/models';
 import { InscriptionsService } from '../../../core/services/inscriptions.service';
 import { ActivatedRoute } from '@angular/router';
@@ -9,9 +9,10 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './inscriptions-detail.component.html',
   styleUrls: ['./inscriptions-detail.component.css']
 })
-export class InscriptionsDetailComponent {
+export class InscriptionsDetailComponent implements OnDestroy {
 
   inscriptionsDetail: Inscription | undefined;
+  destroyed$ = new Subject<void>();
 
   constructor(
     private inscriptionsService: InscriptionsService,
@@ -19,8 +20,14 @@ export class InscriptionsDetailComponent {
   ) {
     // TODO: cuando quiero visualizar una comision que cree mediante formulario, no lo encuentra
     this.inscriptionsService.getInscriptionDetail(parseInt(this.activatedRoute.snapshot.params['commission']))
+      .pipe(takeUntil(this.destroyed$))
       .subscribe((inscriptionDetail) => this.inscriptionsDetail = inscriptionDetail);
   }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  };
 
   removeInscriptionStudent(ev: number): void {
     if (ev && this.inscriptionsDetail) {
