@@ -23,18 +23,14 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Nombre del Curso</mat-label>
-          <input
-            [formControl]="courseNameCtrl"
-            matInput
-            placeholder="Nombre del Curso"
-            [tabIndex]="3"
-          >
-      
-          <mat-error *ngFor="let error of courseNameCtrl.errors | keyvalue">
-            {{ error | controlErrorMessages }}
-          </mat-error>
+            <mat-label>Seleccionar Curso</mat-label>
+            <mat-select [formControl]="courseNameCtrl" [tabIndex]="6">
+              <mat-option *ngFor="let course of coursesList$ | async" [value]="course">
+                {{course}}
+              </mat-option>
+            </mat-select>
         </mat-form-field>
+
       </div>
       <div class="col">
         <mat-form-field appearance="fill">

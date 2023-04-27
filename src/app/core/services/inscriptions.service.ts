@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { Inscription, InscriptionsStudents, Mentor } from '../models';
+import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { Course, Inscription, InscriptionsStudents, Mentor } from '../models';
+import { CoursesService } from './courses.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InscriptionsService {
 
-  
+  private courses$: Observable<string[]>;
+
   private inscriptions$ = new BehaviorSubject<Inscription[]>([
     {
       id: 1,
@@ -74,7 +76,13 @@ export class InscriptionsService {
     { id: 6, fullName: 'Nicolas Patrizi' }
   ]);
 
-  constructor() {}
+  constructor(
+    private coursesService: CoursesService
+  ) {
+    this.courses$ = this.coursesService.getCoursesList().pipe(
+      map((courses) => courses.map((course) => course.courseName))
+    );
+  }
 
   getInscriptionsList(): Observable<Inscription[]> {
     return this.inscriptions$.asObservable();
@@ -93,5 +101,9 @@ export class InscriptionsService {
 
   getInscriptionsMentors(): Observable<Mentor[]> {
     return this.inscriptionsMentors$.asObservable();
+  }
+
+  getListOfCourses(): Observable<string[]> {
+    return this.courses$;
   }
 }

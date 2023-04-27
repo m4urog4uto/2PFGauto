@@ -30,8 +30,8 @@ export class ModalFormInscriptionComponent {
   studentsCtrl: FormControl<InscriptionsStudents[] | null>;
 
   mentorsList$: Observable<SelectOptions[]>;
-
   studentsList$: Observable<SelectOptions[]>;
+  coursesList$: Observable<string[]>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -43,8 +43,6 @@ export class ModalFormInscriptionComponent {
     
     this.commissionCtrl = new FormControl(commission, [ Validators.required ]);
     this.courseNameCtrl = new FormControl(courseName, [ Validators.required ]);
-
-    // TODO: Error, no me carga los valores del array de objetos como de forma inicial.
     this.mentorsCtrl = new FormControl(mentors, [ Validators.required ]);
     this.studentsCtrl = new FormControl(students, [ Validators.required ]);
 
@@ -58,6 +56,7 @@ export class ModalFormInscriptionComponent {
 
     this.studentsList$ = this.inscriptionsService.getInscriptionsStudents();
     this.mentorsList$ = this.inscriptionsService.getInscriptionsMentors();
+    this.coursesList$ = this.inscriptionsService.getListOfCourses();
   }
 
   onSubmit(): void {
