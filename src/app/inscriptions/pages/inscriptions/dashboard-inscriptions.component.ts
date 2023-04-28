@@ -61,14 +61,16 @@ export class DashboardInscriptionsComponent {
       });
 
       dialogo.afterClosed().subscribe((result: Inscription) => {
-        const newAlumnosList = this.inscriptions.map(obj => {
-          if (obj.id === result.id) {
-            return { ...obj, ...result }
-          }
-          return obj;
-        })
-        this.inscriptions = [ ...newAlumnosList ];
-        this.inscriptionsService.updateInscriptionsList(this.inscriptions);
+        if (result) {
+          const newAlumnosList = this.inscriptions.map(obj => {
+            if (obj.id === result.id) {
+              return { ...obj, ...result }
+            }
+            return obj;
+          })
+          this.inscriptions = [ ...newAlumnosList ];
+          this.inscriptionsService.updateInscriptionsList(this.inscriptions);
+        }
       });
     }
   }

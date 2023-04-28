@@ -65,14 +65,16 @@ export class DashboardCoursesComponent {
       });
 
       dialogo.afterClosed().subscribe((result: Course) => {
-        const newAlumnosList = this.courses.map(obj => {
-          if (obj.id === result.id) {
-            return { ...obj, ...result }
-          }
-          return obj;
-        })
-        this.courses = [ ...newAlumnosList ];
-        this.coursesService.updateCourseList(this.courses);
+        if (result) {
+          const newAlumnosList = this.courses.map(obj => {
+            if (obj.id === result.id) {
+              return { ...obj, ...result }
+            }
+            return obj;
+          })
+          this.courses = [ ...newAlumnosList ];
+          this.coursesService.updateCourseList(this.courses);
+        }
       });
 
     }

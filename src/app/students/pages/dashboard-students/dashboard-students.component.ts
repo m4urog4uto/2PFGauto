@@ -72,14 +72,16 @@ export class DashboardStudentsComponent {
       });
 
       dialogo.afterClosed().subscribe((result: Student) => {
-        const newAlumnosList = this.students.map(obj => {
-          if (obj.id === result.id) {
-            return { ...obj, ...result }
-          }
-          return obj;
-        })
-        this.students = [ ...newAlumnosList ];
-        this.studentService.updateStudentList(this.students);
+        if (result) {
+          const newAlumnosList = this.students.map(obj => {
+            if (obj.id === result.id) {
+              return { ...obj, ...result }
+            }
+            return obj;
+          })
+          this.students = [ ...newAlumnosList ];
+          this.studentService.updateStudentList(this.students);
+        }
       });
 
     }

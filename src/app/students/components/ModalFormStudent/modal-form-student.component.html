@@ -1,7 +1,6 @@
 <div class="container">
   <h1 [appFontSize]="20" mat-dialog-title>Añadir Alumno</h1>
   <form
-    (ngSubmit)="onSubmit()"
     [formGroup]="studentForm"
     autocomplete="off"
     class="form-container"
@@ -99,6 +98,7 @@
         mat-button
         [mat-dialog-close]="1"
         type="submit"
+        (click)="onSubmit()"
         [disabled]="this.studentForm.invalid"
       > Guardar </button>
     </div>
