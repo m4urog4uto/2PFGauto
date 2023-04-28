@@ -4,15 +4,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Inscription, InscriptionsStudents, Mentor } from '../../../core/models/inscriptions.model';
 import { InscriptionsService } from '../../../core/services/inscriptions.service';
 import { Observable, take, takeUntil } from 'rxjs';
+import { Course } from 'src/app/core/models';
 
 
 interface DialogData {
   inscription: Inscription;
-}
-
-interface SelectOptions {
-  id: number;
-  fullName: string;
 }
 
 @Component({
@@ -25,13 +21,13 @@ export class ModalFormInscriptionComponent {
   inscriptionForm: FormGroup;
 
   commissionCtrl: FormControl<number | null>;
-  courseNameCtrl: FormControl<string | null>;
+  courseSelectedCtrl: FormControl<Course | null>;
   mentorsCtrl: FormControl<Mentor[] | null>;
   studentsCtrl: FormControl<InscriptionsStudents[] | null>;
 
-  mentorsList$: Observable<SelectOptions[]>;
-  studentsList$: Observable<SelectOptions[]>;
-  coursesList$: Observable<string[]>;
+  mentorsList$: Observable<Mentor[]>;
+  studentsList$: Observable<InscriptionsStudents[]>;
+  coursesList$: Observable<Course[]>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -39,24 +35,24 @@ export class ModalFormInscriptionComponent {
     public formBuilder: FormBuilder,
     private inscriptionsService: InscriptionsService
   ) {
-    const { id, commission, courseName, mentors, students } = data.inscription;
+    this.studentsList$ = this.inscriptionsService.getInscriptionsStudents();
+    this.mentorsList$ = this.inscriptionsService.getInscriptionsMentors();
+    this.coursesList$ = this.inscriptionsService.getListOfCourses();
+
+    const { id, commission, courseSelected, mentors, students } = data.inscription;
 
     this.commissionCtrl = new FormControl(commission, [ Validators.required ]);
-    this.courseNameCtrl = new FormControl(courseName, [ Validators.required ]);
+    this.courseSelectedCtrl = new FormControl(courseSelected, [ Validators.required ]);
     this.mentorsCtrl = new FormControl(mentors, [ Validators.required ]);
     this.studentsCtrl = new FormControl(students, [ Validators.required ]);
 
     this.inscriptionForm = this.formBuilder.group({
       id: new FormControl(id, []),
       commission: this.commissionCtrl,
-      courseName: this.courseNameCtrl,
+      courseSelected: this.courseSelectedCtrl,
       mentors: this.mentorsCtrl,
       students: this.studentsCtrl
     });
-
-    this.studentsList$ = this.inscriptionsService.getInscriptionsStudents();
-    this.mentorsList$ = this.inscriptionsService.getInscriptionsMentors();
-    this.coursesList$ = this.inscriptionsService.getListOfCourses();
   }
 
   onSubmit(): void {

@@ -11,7 +11,7 @@
         <div class="container-cards">
             <mat-card *ngFor="let inscription of inscriptions" class="card">
                 <mat-card-header>
-                    <mat-card-title>{{ inscription.courseName }}</mat-card-title>
+                    <mat-card-title>{{ inscription.courseSelected.courseName }}</mat-card-title>
                     <mat-card-subtitle>Comisión: #{{ inscription.commission }}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
@@ -24,6 +24,9 @@
                     <ng-template #studentsQuantity>
                         <span>Cantidad de Alumnos: {{ inscription.students.length }}</span>
                     </ng-template>
+                    <div>
+                        <strong>Duración: {{ inscription.courseSelected.duration }}</strong>
+                    </div>
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-icon-button (click)="detailInscription(inscription.commission)">

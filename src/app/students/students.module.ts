@@ -12,6 +12,7 @@ import { DirectivesModule } from '../shared/directives/directives.module';
 
 import { TableStudentComponent } from './components/TableStudent/table-student.component';
 import { ModalFormStudentComponent } from './components/ModalFormStudent/modal-form-student.component';
+import { TableCoursesSelected } from './components/TableCoursesSelected/table-courses-selected.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ModalFormStudentComponent } from './components/ModalFormStudent/modal-f
     DashboardStudentsComponent,
     DetailsStudentsComponent,
     TableStudentComponent,
-    ModalFormStudentComponent
+    ModalFormStudentComponent,
+    TableCoursesSelected
   ],
   imports: [
     CommonModule,

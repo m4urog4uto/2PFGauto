@@ -15,16 +15,16 @@ export class CoursesService {
       duration: '3 meses'
     },
     {
-      id: 2,
+      id: 1,
       courseName: 'Node JS',
-      description: 'Node.js es un entorno en tiempo de ejecución multiplataforma, de código abierto, para la capa del servidor basado en el lenguaje de programación JavaScript, asíncrono, con E/S de datos en una arquitectura orientada a eventos y basado en el motor V8 de Google.',
+      description: 'Es un entorno controlado por eventos diseñado para crear aplicaciones escalables, permitiéndote establecer y gestionar múltiples conexiones al mismo tiempo. Gracias a esta característica, no tienes que preocuparte con el bloqueo de procesos, pues no hay bloqueos.',
       duration: '3 meses'
     },
     {
-      id: 3,
+      id: 1,
       courseName: 'Ciberseguridad',
-      description: 'La ciberseguridad, también conocida como seguridad digital, es la práctica de proteger su información digital, dispositivos y activos. Esto incluye información personal, cuentas, archivos, fotos e incluso el dinero.',
-      duration: '5 meses'
+      description: 'Gestiona todos los riesgos que pueden presentarse en tu organización. Visualiza de manera clara el número de riegos y toma decisiones oportunas. Conoce Más. Prueba gratis por 15 días. Sin Tarjeta de crédito. Conferencias Virtuales. Escuela Gestión Riesgos.',
+      duration: '3 meses'
     }
   ])
 
