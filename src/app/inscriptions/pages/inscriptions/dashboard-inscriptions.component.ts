@@ -31,7 +31,7 @@ export class DashboardInscriptionsComponent {
       data: {
         inscription: {
           commission: '',
-          courseSelected: '',
+          courseName: '',
           mentors: [],
           students: []
         }
@@ -39,7 +39,8 @@ export class DashboardInscriptionsComponent {
     });
 
     dialogo.afterClosed().subscribe(result => {
-      if (result.courseSelected) {
+      console.log(result);
+      if (result.courseName) {
         const newStudent = { ...result, id: this.inscriptions.length + 1 }
         this.inscriptions = [ ...this.inscriptions, newStudent ];
         this.inscriptionsService.updateInscriptionsList(this.inscriptions);
@@ -50,13 +51,13 @@ export class DashboardInscriptionsComponent {
   editInscription(id: number): void {
     const inscriptionId = this.inscriptions.find((obj) => obj.id === id);
     if (inscriptionId) {
-      const { id, commission, courseSelected, mentors, students } = inscriptionId;
+      const { id, commission, courseName, mentors, students } = inscriptionId;
       const dialogo = this.dialogService.open(ModalFormInscriptionComponent, {
         data: {
           inscription: {
             id,
             commission,
-            courseSelected,
+            courseName,
             mentors,
             students
           }

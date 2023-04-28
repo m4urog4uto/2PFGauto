@@ -9,18 +9,13 @@ import { StudentService } from './student.service';
 })
 export class InscriptionsService {
 
-  private courses$: Observable<Course[]>;
+  private courses$: Observable<string[]>;
 
   private inscriptions$ = new BehaviorSubject<Inscription[]>([
     {
       id: 1,
       commission: 11232,
-      courseSelected: {
-        id: 1,
-        courseName: 'Angular',
-        description: 'Framework para aplicaciones web desarrollado en TypeScript, de código abierto, mantenido por Google, que se utiliza para crear y mantener aplicaciones web de una sola página',
-        duration: '3 meses'
-      },
+      courseName: 'Angular',
       mentors: [
         'Carlos Garcia',
         'Yamila Gimenez'
@@ -46,7 +41,10 @@ export class InscriptionsService {
     private coursesService: CoursesService,
     private studentService: StudentService
   ) {
-    this.courses$ = this.coursesService.getCoursesList();
+    this.courses$ = this.coursesService.getCoursesList()
+      .pipe(
+        map((courses) => courses.map((course) => course.courseName))
+      )
 
     this.inscriptionsStudentsList$ = this.studentService.getStudentList()
       .pipe(
@@ -77,7 +75,7 @@ export class InscriptionsService {
     return this.inscriptionsMentors$.asObservable();
   }
 
-  getListOfCourses(): Observable<Course[]> {
+  getListOfCourses(): Observable<string[]> {
     return this.courses$;
   }
 }

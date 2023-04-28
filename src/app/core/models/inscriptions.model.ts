@@ -14,7 +14,7 @@ export interface InscriptionsStudents {
 export interface Inscription {
     id: number;
     commission: number;
-    courseSelected: Course;
+    courseName: string;
     mentors: string[];
     students: string[];
 }

@@ -21,13 +21,13 @@ export class ModalFormInscriptionComponent {
   inscriptionForm: FormGroup;
 
   commissionCtrl: FormControl<number | null>;
-  courseSelectedCtrl: FormControl<Course | null>;
+  courseNameCtrl: FormControl<string | null>;
   mentorsCtrl: FormControl<string[] | null>;
   studentsCtrl: FormControl<string[] | null>;
 
   mentorsList$: Observable<string[]>;
   studentsList$: Observable<string[]>;
-  coursesList$: Observable<Course[]>;
+  coursesList$: Observable<string[]>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -39,17 +39,17 @@ export class ModalFormInscriptionComponent {
     this.mentorsList$ = this.inscriptionsService.getInscriptionsMentors();
     this.coursesList$ = this.inscriptionsService.getListOfCourses();
 
-    const { id, commission, courseSelected, mentors, students } = data.inscription;
+    const { id, commission, courseName, mentors, students } = data.inscription;
 
     this.commissionCtrl = new FormControl(commission, [ Validators.required ]);
-    this.courseSelectedCtrl = new FormControl(courseSelected, [ Validators.required ]);
+    this.courseNameCtrl = new FormControl(courseName, [ Validators.required ]);
     this.mentorsCtrl = new FormControl(mentors, [ Validators.required ]);
     this.studentsCtrl = new FormControl(students, [ Validators.required ]);
 
     this.inscriptionForm = this.formBuilder.group({
       id: new FormControl(id, []),
       commission: this.commissionCtrl,
-      courseSelected: this.courseSelectedCtrl,
+      courseName: this.courseNameCtrl,
       mentors: this.mentorsCtrl,
       students: this.studentsCtrl
     });
