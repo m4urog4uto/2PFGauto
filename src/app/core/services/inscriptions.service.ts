@@ -22,26 +22,24 @@ export class InscriptionsService {
         duration: '3 meses'
       },
       mentors: [
-        { id: 1, fullName: 'Carlos Garcia' },
-        { id: 2, fullName: 'Yamila Gimenez' }
+        'Carlos Garcia',
+        'Yamila Gimenez'
       ],
       students: [
-        { id: 1, fullName: 'Carlos Calvo', dni: '41332232'},
-        { id: 2, fullName: 'Manuel Perez', dni: '42334622'},
-        { id: 3, fullName: 'Lucia Llanos', dni: '43432536'}
+        'Carlos Calvo'
       ]
     }
   ])
 
-  private inscriptionsStudentsList$: Observable<InscriptionsStudents[]>;
+  private inscriptionsStudentsList$: Observable<string[]>;
 
-  private inscriptionsMentors$ = new BehaviorSubject<Mentor[]>([
-    { id: 1, fullName: 'Carlos Garcia' },
-    { id: 2, fullName: 'Yamila Gimenez' },
-    { id: 3, fullName: 'Juan Lopez' },
-    { id: 4, fullName: 'Ricardo Moreno' },
-    { id: 5, fullName: 'Sonia Gonzales' },
-    { id: 6, fullName: 'Nicolas Patrizi' }
+  private inscriptionsMentors$ = new BehaviorSubject<string[]>([
+    'Carlos Garcia',
+    'Yamila Gimenez',
+    'Juan Lopez',
+    'Ricardo Moreno',
+    'Sonia Gonzales',
+    'Nicolas Patrizi'
   ]);
 
   constructor(
@@ -52,13 +50,7 @@ export class InscriptionsService {
 
     this.inscriptionsStudentsList$ = this.studentService.getStudentList()
       .pipe(
-        map((students) => students.map((student) => {
-          return { 
-            id: student.id,
-            fullName: `${student.name} ${student.surname}`,
-            dni: student.dni
-          }
-        }))
+        map((students) => students.map((student) => `${student.name} ${student.surname}`))
       )
   }
 
@@ -77,11 +69,11 @@ export class InscriptionsService {
       )
   }
 
-  getInscriptionsStudents(): Observable<InscriptionsStudents[]> {
+  getInscriptionsStudents(): Observable<string[]> {
     return this.inscriptionsStudentsList$;
   }
 
-  getInscriptionsMentors(): Observable<Mentor[]> {
+  getInscriptionsMentors(): Observable<string[]> {
     return this.inscriptionsMentors$.asObservable();
   }
 

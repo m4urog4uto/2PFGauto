@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from
 
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InscriptionsStudents } from 'src/app/core/models';
+import { InscriptionsStudents, Student } from 'src/app/core/models';
 
 @Component({
   selector: 'app-table-inscriptions',
@@ -12,7 +12,7 @@ import { InscriptionsStudents } from 'src/app/core/models';
 export class TableInscriptionComponent implements OnChanges {
 
   @Input()
-  items: InscriptionsStudents[] = [];
+  items: Student[] = [];
 
   @Output()
   editStudent = new EventEmitter<number>();

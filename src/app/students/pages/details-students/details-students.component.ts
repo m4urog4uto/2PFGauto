@@ -16,19 +16,23 @@ export class DetailsStudentsComponent {
   studentDetail: Student | undefined;
   coursesSelected: Course[] | undefined;
 
+  destroyed$ = new Subject<void>();
+
   constructor(
     private studentService: StudentService,
     private activatedRoute: ActivatedRoute,
     private coursesService: CoursesService
   ) {
     this.studentService.getStudentDetail(parseInt(this.activatedRoute.snapshot.params['studentId']))
+      .pipe(takeUntil(this.destroyed$))
       .subscribe((result) => this.studentDetail = result);
     
     this.studentService.getStudentList().subscribe((result) => this.studentsList = result);
     
     this.coursesService.getCoursesList()
       .pipe(
-        map((courses) => courses.filter((course, i) => course.courseName === this.studentDetail?.courseSelected[i])
+        takeUntil(this.destroyed$),
+        map((courses) => courses.filter((course, i) => this.studentDetail?.courseSelected.includes(course.courseName))
       ))
       .subscribe((result) => this.coursesSelected = result)
   }
@@ -45,4 +49,9 @@ export class DetailsStudentsComponent {
       this.studentDetail.courseSelected = coursesSelectedNames;
     }
   }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  };
 }

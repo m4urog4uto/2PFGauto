@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Student } from 'src/app/core/models';
 import { ModalFormStudentComponent } from '../../components/ModalFormStudent/modal-form-student.component';
 import { StudentService } from '../../../core/services/student.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-students',
@@ -11,12 +12,15 @@ import { StudentService } from '../../../core/services/student.service';
 })
 export class DashboardStudentsComponent {
   students: Student[] = [];
+  destroyed$ = new Subject<void>();
 
   constructor(
     private dialogService: MatDialog,
     private studentService: StudentService
   ) {
-    studentService.getStudentList().subscribe((students) => this.students = students)
+    studentService.getStudentList()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((students) => this.students = students)
   }
 
 
@@ -86,4 +90,9 @@ export class DashboardStudentsComponent {
 
     }
   }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  };
 }

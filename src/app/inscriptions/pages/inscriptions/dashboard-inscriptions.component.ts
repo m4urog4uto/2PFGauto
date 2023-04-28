@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { InscriptionsService } from '../../../core/services/inscriptions.service';
-import { Observable } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Inscription } from 'src/app/core/models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,6 +13,7 @@ import { ModalFormInscriptionComponent } from '../../components/ModalFormInscrip
 })
 export class DashboardInscriptionsComponent {
   inscriptions: Inscription[] = [];
+  destroyed$ = new Subject<void>();
 
   constructor(
     private inscriptionsService: InscriptionsService,
@@ -20,7 +21,9 @@ export class DashboardInscriptionsComponent {
     private activatedRoute: ActivatedRoute,
     private dialogService: MatDialog
   ) {
-    this.inscriptionsService.getInscriptionsList().subscribe((inscriptions) => this.inscriptions = inscriptions);
+    this.inscriptionsService.getInscriptionsList()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((inscriptions) => this.inscriptions = inscriptions);
   }
 
   addInscriptionForm(): void {
@@ -29,8 +32,8 @@ export class DashboardInscriptionsComponent {
         inscription: {
           commission: '',
           courseSelected: '',
-          mentors: '',
-          students: ''
+          mentors: [],
+          students: []
         }
       }
     });

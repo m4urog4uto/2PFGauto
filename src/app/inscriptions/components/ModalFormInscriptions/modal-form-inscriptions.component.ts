@@ -22,11 +22,11 @@ export class ModalFormInscriptionComponent {
 
   commissionCtrl: FormControl<number | null>;
   courseSelectedCtrl: FormControl<Course | null>;
-  mentorsCtrl: FormControl<Mentor[] | null>;
-  studentsCtrl: FormControl<InscriptionsStudents[] | null>;
+  mentorsCtrl: FormControl<string[] | null>;
+  studentsCtrl: FormControl<string[] | null>;
 
-  mentorsList$: Observable<Mentor[]>;
-  studentsList$: Observable<InscriptionsStudents[]>;
+  mentorsList$: Observable<string[]>;
+  studentsList$: Observable<string[]>;
   coursesList$: Observable<Course[]>;
 
   constructor(

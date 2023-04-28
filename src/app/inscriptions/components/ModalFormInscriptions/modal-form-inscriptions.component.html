@@ -40,7 +40,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Añadir Mentoria</mat-label>
           <mat-select [formControl]="mentorsCtrl" multiple>
-            <mat-option *ngFor="let mentor of mentorsList$ | async" [value]="mentor">{{mentor.fullName}}</mat-option>
+            <mat-option *ngFor="let mentor of mentorsList$ | async" [value]="mentor">{{mentor}}</mat-option>
           </mat-select>
           <mat-error *ngFor="let error of mentorsCtrl.errors | keyvalue">
             {{ error | controlErrorMessages }}
@@ -50,7 +50,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Añadir Alumnos</mat-label>
           <mat-select [formControl]="studentsCtrl" multiple>
-            <mat-option *ngFor="let student of studentsList$ | async" [value]="student">{{student.fullName}}</mat-option>
+            <mat-option *ngFor="let student of studentsList$ | async" [value]="student">{{student}}</mat-option>
           </mat-select>
           <mat-error *ngFor="let error of studentsCtrl.errors | keyvalue">
             {{ error | controlErrorMessages }}
