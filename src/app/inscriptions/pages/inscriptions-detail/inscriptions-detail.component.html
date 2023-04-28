@@ -1,9 +1,10 @@
 <div *ngIf="inscriptionsDetail" class="app-inscriptions-detail">
     <h1>Detalle Curso Inscripto</h1>
     <hr>
-    <h2>{{ inscriptionsDetail.courseName }}</h2>
-    <h3>Comisión: #{{ inscriptionsDetail.commission }}</h3>
-
+    <h2>{{ inscriptionsDetail.courseSelected.courseName }}</h2>
+    <h5>Comisión: #{{ inscriptionsDetail.commission }}</h5>
+    <h5>Duración: {{ inscriptionsDetail.courseSelected.duration }}</h5>
+    <hr>
     <div>
         <h6>Mentores Asignados</h6>
         <ul>
