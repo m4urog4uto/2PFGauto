@@ -11,7 +11,7 @@ export class StudentService {
   private courses$: Observable<string[]>;
 
   private students$ = new BehaviorSubject<Student[]>([
-    { id: 1, name: 'Carlos', surname: 'Calvo', dni: '41332232', email: 'carlos.calvo@gmail.com', phone: '1122334455', courseSelected: ['Angular']}])
+    { id: 1, name: 'Carlos', surname: 'Calvo', dni: '41332232', email: 'carlos.calvo@gmail.com', phone: '1122334455', courseSelected: ['Angular', 'Node JS']}])
 
   constructor(
     private coursesService: CoursesService
